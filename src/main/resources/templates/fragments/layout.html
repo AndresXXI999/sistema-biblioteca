@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<header th:fragment="encabezado" class="menu">
+	<a th:href="@{/}">Inicio</a>
+	<a th:href="@{/libros}">Catalogo</a>
+	<a th:if="${session.rol == 'ADMIN'}" th:href="@{/admin/socios}">Socios</a>
+	<a th:if="${session.rol == 'ADMIN'}" th:href="@{/admin/prestamos}">Prestamos</a>
+	<a th:if="${session.rol == 'ADMIN'}" th:href="@{/admin/dashboard}">Dashboard</a>
+	<a th:if="${session.rol == 'ADMIN'}" th:href="@{/admin/configuracion}">Configuracion</a>
+	<a th:if="${session.rol == 'SOCIO'}" th:href="@{/socio/historial}">Mi historial</a>
+	<a th:href="@{/logout}">Cerrar sesion</a>
+</header>
+
+<div th:fragment="mensajes">
+	<div th:if="${mensaje}" class="exito" th:text="${mensaje}"></div>
+	<div th:if="${error}" class="error" th:text="${error}"></div>
+</div>
+
+<footer th:fragment="pie" class="pie">
+	Sistema de Biblioteca - Proyecto de Diseño Web
+</footer>
+
+</body>
+</html>
