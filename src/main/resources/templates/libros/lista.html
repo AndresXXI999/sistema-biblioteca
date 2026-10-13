@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Catalogo de libros</title>
+	<link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/layout :: encabezado}"></div>
+
+<div class="contenido">
+	<h1>Catalogo de libros</h1>
+
+	<div th:replace="~{fragments/layout :: mensajes}"></div>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Titulo</th>
+				<th>Autor</th>
+				<th>ISBN</th>
+				<th>Categoria</th>
+				<th>Estado</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="libro : ${libros}">
+				<td th:text="${libro.titulo}"></td>
+				<td th:text="${libro.autor}"></td>
+				<td th:text="${libro.isbn}"></td>
+				<td th:text="${libro.categoria}"></td>
+				<td th:text="${libro.disponible ? 'Disponible' : 'Prestado'}"></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div th:replace="~{fragments/layout :: pie}"></div>
+
+</body>
+</html>
