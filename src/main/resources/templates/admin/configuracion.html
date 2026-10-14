@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Configuracion</title>
+	<link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/layout :: encabezado}"></div>
+
+<div class="contenido">
+	<h1>Configuracion</h1>
+
+	<div th:replace="~{fragments/layout :: mensajes}"></div>
+
+	<form th:action="@{/admin/configuracion/guardar}" method="post">
+		<label>Multa por dia de retraso (Q)</label>
+		<input type="number" name="multaPorDia" step="0.01" min="0.01"
+			th:value="${configuracion.multaPorDia}" required>
+
+		<button type="submit">Guardar</button>
+	</form>
+</div>
+
+<div th:replace="~{fragments/layout :: pie}"></div>
+
+</body>
+</html>
