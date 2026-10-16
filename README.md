@@ -19,3 +19,5 @@ de libros, los socios y los préstamos de la biblioteca del campus.
 
 ## Entorno verificado
 (vacío por ahora)
+Brandon Mazariegos - Windows 11, JDK 17, MySQL 8.0
+
