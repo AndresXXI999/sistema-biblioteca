@@ -14,6 +14,21 @@
 
 	<div th:replace="~{fragments/layout :: mensajes}"></div>
 
+	<form th:action="@{/libros}" method="get">
+		<select name="campo">
+			<option value="titulo" th:selected="${campo == 'titulo'}">Titulo</option>
+			<option value="autor" th:selected="${campo == 'autor'}">Autor</option>
+			<option value="isbn" th:selected="${campo == 'isbn'}">ISBN</option>
+			<option value="categoria" th:selected="${campo == 'categoria'}">Categoria</option>
+		</select>
+		<input type="text" name="texto" th:value="${texto}">
+		<button type="submit">Buscar</button>
+	</form>
+
+	<p th:if="${session.rol == 'ADMIN'}">
+		<a th:href="@{/admin/libros/nuevo}">Nuevo libro</a>
+	</p>
+
 	<table>
 		<thead>
 			<tr>
@@ -22,6 +37,7 @@
 				<th>ISBN</th>
 				<th>Categoria</th>
 				<th>Estado</th>
+				<th th:if="${session.rol == 'ADMIN'}">Acciones</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -31,6 +47,9 @@
 				<td th:text="${libro.isbn}"></td>
 				<td th:text="${libro.categoria}"></td>
 				<td th:text="${libro.disponible ? 'Disponible' : 'Prestado'}"></td>
+				<td th:if="${session.rol == 'ADMIN'}">
+					<a th:href="@{/admin/libros/editar/{id}(id=${libro.id})}">Editar</a>
+				</td>
 			</tr>
 		</tbody>
 	</table>
