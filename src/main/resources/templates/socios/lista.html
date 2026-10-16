@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Socios</title>
+	<link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/layout :: encabezado}"></div>
+
+<div class="contenido">
+	<h1>Socios</h1>
+
+	<div th:replace="~{fragments/layout :: mensajes}"></div>
+
+	<a th:href="@{/admin/socios/nuevo}">Nuevo socio</a>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Nombre</th>
+				<th>Tipo</th>
+				<th>Correo</th>
+				<th>Telefono</th>
+				<th>Usuario</th>
+				<th>Acciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="socio : ${socios}">
+				<td th:text="${socio.nombre}"></td>
+				<td th:text="${socio.tipo}"></td>
+				<td th:text="${socio.correo}"></td>
+				<td th:text="${socio.telefono}"></td>
+				<td th:text="${socio.usuario.username}"></td>
+				<td>
+					<a th:href="@{/admin/socios/editar/{id}(id=${socio.id})}">Editar</a>
+					<a th:href="@{/admin/socios/{id}/historial(id=${socio.id})}">Historial</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div th:replace="~{fragments/layout :: pie}"></div>
+
+</body>
+</html>

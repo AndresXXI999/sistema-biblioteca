@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Socio</title>
+	<link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/layout :: encabezado}"></div>
+
+<div class="contenido">
+	<h1 th:text="${socio.id == null} ? 'Nuevo socio' : 'Editar socio'"></h1>
+
+	<div th:replace="~{fragments/layout :: mensajes}"></div>
+
+	<form th:action="@{/admin/socios/guardar}" th:object="${socio}" method="post">
+		<input type="hidden" th:field="*{id}">
+
+		<label>Nombre</label>
+		<input type="text" th:field="*{nombre}" required>
+
+		<label>Tipo</label>
+		<select th:field="*{tipo}">
+			<option value="ESTUDIANTE">Estudiante</option>
+			<option value="DOCENTE">Docente</option>
+		</select>
+
+		<label>Correo</label>
+		<input type="email" th:field="*{correo}" required>
+
+		<label>Telefono</label>
+		<input type="text" th:field="*{telefono}" required>
+
+		<div th:if="${socio.id == null}">
+			<label>Usuario</label>
+			<input type="text" th:field="*{usuario.username}" required>
+
+			<label>Contraseña</label>
+			<input type="password" th:field="*{usuario.password}" required>
+		</div>
+
+		<button type="submit">Guardar</button>
+		<a th:href="@{/admin/socios}">Cancelar</a>
+	</form>
+</div>
+
+<div th:replace="~{fragments/layout :: pie}"></div>
+
+</body>
+</html>
