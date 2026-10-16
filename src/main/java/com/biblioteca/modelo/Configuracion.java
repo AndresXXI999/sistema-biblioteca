@@ -14,6 +14,8 @@ public class Configuracion {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+		private double multaPorDia = 5.0;
+
 	public Configuracion() {
 	}
 
@@ -25,4 +27,11 @@ public class Configuracion {
 		this.id = id;
 	}
 
+	public double getMultaPorDia() {
+		return multaPorDia;
+	}
+
+	public void setMultaPorDia(double multaPorDia) {
+		this.multaPorDia = multaPorDia;
+	}
 }
