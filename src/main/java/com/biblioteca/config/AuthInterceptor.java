@@ -24,12 +24,12 @@ public class AuthInterceptor implements HandlerInterceptor {
 		String rol = (String) session.getAttribute("rol");
 		String uri = request.getRequestURI();
 
-		if (uri.startsWith("/admin") && !"ADMIN".equals(rol)) {
+		if (uri.startsWith("/admin/") && !"ADMIN".equals(rol)) {
 			response.sendRedirect(request.getContextPath() + "/");
 			return false;
 		}
 
-		if (uri.startsWith("/socio") && !"SOCIO".equals(rol)) {
+		if (uri.startsWith("/socio/") && !"SOCIO".equals(rol)) {
 			response.sendRedirect(request.getContextPath() + "/");
 			return false;
 		}
