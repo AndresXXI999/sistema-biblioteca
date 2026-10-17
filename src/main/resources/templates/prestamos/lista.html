@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Prestamos</title>
+	<link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/layout :: encabezado}"></div>
+
+<div class="contenido">
+	<h1>Prestamos</h1>
+
+	<div th:replace="~{fragments/layout :: mensajes}"></div>
+
+	<a th:href="@{/admin/prestamos/nuevo}">Nuevo prestamo</a>
+
+	<h2>Prestamos activos</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>Libro</th>
+				<th>Socio</th>
+				<th>Fecha de salida</th>
+				<th>Fecha limite</th>
+				<th>Estado</th>
+				<th>Acciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="prestamo : ${activos}">
+				<td th:text="${prestamo.libro.titulo}"></td>
+				<td th:text="${prestamo.socio.nombre}"></td>
+				<td th:text="${prestamo.fechaSalida}"></td>
+				<td th:text="${prestamo.fechaLimite}"></td>
+				<td th:text="${prestamo.fechaLimite.isBefore(T(java.time.LocalDate).now()) ? 'Retrasado' : 'Activo'}"
+					th:class="${prestamo.fechaLimite.isBefore(T(java.time.LocalDate).now())} ? 'error'"></td>
+				<td>
+					<form th:action="@{/admin/prestamos/devolver/{id}(id=${prestamo.id})}" method="post">
+						<button type="submit">Devolver</button>
+					</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<h2>Multas pendientes</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>Socio</th>
+				<th>Libro</th>
+				<th>Multa (Q)</th>
+				<th>Acciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="prestamo : ${multasPendientes}">
+				<td th:text="${prestamo.socio.nombre}"></td>
+				<td th:text="${prestamo.libro.titulo}"></td>
+				<td th:text="${#numbers.formatDecimal(prestamo.multa, 1, 2)}"></td>
+				<td>
+					<form th:action="@{/admin/prestamos/pagar-multa/{id}(id=${prestamo.id})}" method="post">
+						<button type="submit">Marcar pagada</button>
+					</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div th:replace="~{fragments/layout :: pie}"></div>
+
+</body>
+</html>
