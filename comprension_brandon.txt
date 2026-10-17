@@ -1,0 +1,16 @@
+PREGUNTAS DE COMPRENSION - Brandon Mazariegos
+
+1. Que es una entidad y que es un repositorio? Da un ejemplo de cada uno.
+Una entidad es una clase Java que representa una tabla de la base de datos. Cada campo de la clase es una columna y lleva @Entity arriba. Ejemplo: Socio, que genera la tabla socio. Un repositorio es una interfaz para guardar y buscar en la base de datos. Extiende JpaRepository y Spring crea el codigo solo. Ejemplo: SocioRepository.
+
+2. Por que ConfiguracionService.obtener() crea la fila si no existe?
+La configuracion es una sola fila global que guarda la multa por dia. La primera vez que corre el sistema la tabla esta vacia, y sin esa fila la pantalla de configuracion no tendria ningun valor que mostrar. Por eso obtener() crea una fila con multaPorDia = 5.0 y la guarda, para que siempre haya una configuracion disponible.
+
+3. Que hace @Enumerated(EnumType.STRING) en el campo tipo?
+Hace que MySQL guarde el nombre del enum como texto, por ejemplo DOCENTE, y no como un numero. Es mas seguro: si alguien cambia el orden de los valores del enum, los datos guardados no quedan mal. En la base de datos se ve como enum('DOCENTE','ESTUDIANTE').
+
+4. Por que Socio.usuario tiene cascade ALL?
+Porque cada socio tiene un usuario para iniciar sesion, y con cascade ALL las operaciones que se hacen sobre el socio (guardar, actualizar, borrar) tambien se aplican a su usuario. Asi, al guardar un socio nuevo se guarda su usuario sin usar un repositorio aparte, y al borrar el socio no queda un usuario huerfano.
+
+5. Por que el servicio no debe tener rutas ni @GetMapping?
+Porque cada capa tiene un solo trabajo. El controlador recibe las rutas y las peticiones del navegador; el servicio solo tiene la logica y habla con el repositorio. Si el servicio tuviera rutas, quedaria atado a la parte web y no se podria reutilizar ni cambiar con facilidad.
