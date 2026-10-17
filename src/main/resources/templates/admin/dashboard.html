@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Dashboard</title>
+	<link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/layout :: encabezado}"></div>
+
+<div class="contenido">
+	<h1>Dashboard</h1>
+
+	<div th:replace="~{fragments/layout :: mensajes}"></div>
+
+	<h2>Libros mas prestados</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>Libro</th>
+				<th>Veces prestado</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="fila : ${topLibros}">
+				<td th:text="${fila[0]}"></td>
+				<td th:text="${fila[1]}"></td>
+			</tr>
+			<tr th:if="${#lists.isEmpty(topLibros)}">
+				<td colspan="2">Aun no hay prestamos</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<h2>Socios con deuda</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>Socio</th>
+				<th>Total adeudado (Q)</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="socio : ${sociosConDeuda}">
+				<td th:text="${socio.nombre}"></td>
+				<td th:text="${#numbers.formatDecimal(socio.total, 1, 2)}"></td>
+			</tr>
+			<tr th:if="${#lists.isEmpty(sociosConDeuda)}">
+				<td colspan="2">Ningun socio tiene deuda</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<h2>Disponibilidad de libros</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>Libro</th>
+				<th>Estado</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="libro : ${libros}">
+				<td th:text="${libro.titulo}"></td>
+				<td th:text="${libro.disponible ? 'Disponible' : 'Prestado'}"></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p><a th:href="@{/admin/reportes/prestamos-activos.pdf}">Exportar PDF</a></p>
+</div>
+
+<div th:replace="~{fragments/layout :: pie}"></div>
+
+</body>
+</html>
