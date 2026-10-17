@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Nuevo prestamo</title>
+	<link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/layout :: encabezado}"></div>
+
+<div class="contenido">
+	<h1>Nuevo prestamo</h1>
+
+	<div th:replace="~{fragments/layout :: mensajes}"></div>
+
+	<form th:action="@{/admin/prestamos/guardar}" method="post">
+		<label>Libro</label>
+		<select name="libroId" required>
+			<option th:each="libro : ${libros}" th:value="${libro.id}" th:text="${libro.titulo}"></option>
+		</select>
+
+		<label>Socio</label>
+		<select name="socioId" required>
+			<option th:each="socio : ${socios}" th:value="${socio.id}" th:text="${socio.nombre}"></option>
+		</select>
+
+		<button type="submit">Registrar prestamo</button>
+		<a th:href="@{/admin/prestamos}">Cancelar</a>
+	</form>
+</div>
+
+<div th:replace="~{fragments/layout :: pie}"></div>
+
+</body>
+</html>
