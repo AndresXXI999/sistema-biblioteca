@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Historial de prestamos</title>
+	<link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/layout :: encabezado}"></div>
+
+<div class="contenido">
+	<h1 th:text="'Historial de prestamos de ' + ${socio.nombre}">Historial de prestamos</h1>
+
+	<div th:replace="~{fragments/layout :: mensajes}"></div>
+
+	<p th:if="${#lists.isEmpty(prestamos)}">Este socio no tiene prestamos.</p>
+
+	<table th:unless="${#lists.isEmpty(prestamos)}">
+		<thead>
+			<tr>
+				<th>Libro</th>
+				<th>Salida</th>
+				<th>Limite</th>
+				<th>Devolucion</th>
+				<th>Multa</th>
+				<th>Estado</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="prestamo : ${prestamos}">
+				<td th:text="${prestamo.libro.titulo}"></td>
+				<td th:text="${prestamo.fechaSalida}"></td>
+				<td th:text="${prestamo.fechaLimite}"></td>
+				<td th:text="${prestamo.fechaDevolucion != null ? prestamo.fechaDevolucion : 'Pendiente'}"></td>
+				<td th:text="${prestamo.multa}"></td>
+				<td th:text="${prestamo.fechaDevolucion == null
+					? (prestamo.fechaLimite.isBefore(T(java.time.LocalDate).now()) ? 'Activo (Retrasado)' : 'Activo')
+					: (prestamo.multa == 0 ? 'Devuelto'
+						: (prestamo.multaPagada ? 'Devuelto - multa pagada' : 'Devuelto - multa pendiente'))}"></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div th:replace="~{fragments/layout :: pie}"></div>
+
+</body>
+</html>
